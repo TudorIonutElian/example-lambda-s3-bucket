@@ -34,7 +34,7 @@ jobs:
           aws-region: eu-central-1
       - name: Generate output.zip
         run: |
-            aws s3 cp example-lambda-s3-bucket-${{github.run_number}}.zip s3://${{secrets.AWS_S3_BUCKET}}/output-${{github.run_number}}.zip
+            aws s3 cp example-lambda-s3-bucket-${{github.run_number}}.zip s3://${{secrets.AWS_S3_BUCKET}}/example-lambda-s3-bucket-${{github.run_number}}.zip
   deploy:
       needs: upload-lambda
       name: deploy lambda function
