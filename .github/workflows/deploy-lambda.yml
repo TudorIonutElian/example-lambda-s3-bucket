@@ -26,6 +26,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: output-${{github.run_number}}.zip
+      - name: Move to the location
+        run: cd /home/runner/work/example-lambda-s3-bucket/example-lambda-s3-bucket
       - name: Upload output.zip to S3
         uses: jakejarvis/s3-sync-action@master
         env:
