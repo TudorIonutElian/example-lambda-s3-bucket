@@ -16,7 +16,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: output-${{github.run_number}}.zip
-          path: output-${{github.run_number}}.zip
+          path: /github/workspace/output-${{github.run_number}}.zip
   upload-lambda:
     runs-on: ubuntu-latest
     needs: build-lambda
