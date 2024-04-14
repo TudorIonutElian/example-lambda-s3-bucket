@@ -26,13 +26,14 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: output-${{github.run_number}}.zip
-      - name: Move to the location
-        run: cd /home/runner/work/example-lambda-s3-bucket/example-lambda-s3-bucket
-      - name: Upload output.zip to S3
-        uses: jakejarvis/s3-sync-action@master
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "eu-central-1"
-          SOURCE_DIR: output-${{github.run_number}}.zip
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Generate output.zip
+        run: |
+            aws s3 cp output-${{github.run_number}}.zip s3://${{secrets.AWS_S3_BUCKET}}/output-${{github.run_number}}.zip
+          
+    
